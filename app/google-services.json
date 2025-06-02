@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "14403565377",
+    "project_id": "borarr-fb66e",
+    "storage_bucket": "borarr-fb66e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14403565377:android:a6dc7d7cd17505f8d0d3c0",
+        "android_client_info": {
+          "package_name": "com.example.proyectfaseii"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0-Jx7guK6mESdiYRsK5X_ab9Xx5U-Jqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

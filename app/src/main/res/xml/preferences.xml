@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="username"
+        android:title="@string/pref_username_title"
+        android:dialogTitle="@string/pref_username_dialog"
+        android:inputType="text" />
+
+    <SwitchPreferenceCompat
+        android:key="notifications"
+        android:title="@string/pref_notifications_title"
+        android:defaultValue="true" />
+
+</PreferenceScreen>

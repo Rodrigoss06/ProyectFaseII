@@ -11,24 +11,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectFaseII">
-
+        <service
+            android:name=".notifications.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <!-- MainActivity inicializa Firebase y redirige a Login -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activities.LoginActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.RegisterActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.HomeActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.SettingsActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.AddHabitActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.HabitDetailActivity" android:exported="false"/>
-        <activity android:name=".ui.activities.SuggestionsActivity" android:exported="false"/>
-
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AddHabitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.HabitDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SuggestionsActivity"
+            android:exported="false" />
     </application>
+
 </manifest>

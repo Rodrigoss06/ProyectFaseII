@@ -1,6 +1,8 @@
 package com.example.proyectfaseii.ui.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -16,11 +18,13 @@ import com.example.proyectfaseii.data.api.RetrofitClient
 import com.example.proyectfaseii.data.models.Habito
 import com.example.proyectfaseii.ui.adapters.HabitosAdapter
 import com.example.proyectfaseii.utils.SharedPrefManager
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var tvGreeting: TextView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var rvHabitos: RecyclerView
@@ -30,6 +34,18 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    1001
+                )
+            }
+        }
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         tvGreeting = findViewById(R.id.tvGreeting)
         swipeRefresh = findViewById(R.id.swipeRefresh)
@@ -65,6 +81,21 @@ class HomeActivity : AppCompatActivity() {
         fabAddHabit.setOnClickListener {
             val intent = Intent(this, AddHabitActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1001) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Notificaciones habilitadas", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permiso de notificaciones denegado", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

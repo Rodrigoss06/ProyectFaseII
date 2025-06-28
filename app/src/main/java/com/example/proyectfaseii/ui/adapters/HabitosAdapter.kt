@@ -32,8 +32,8 @@ class HabitosAdapter(
 
     override fun onBindViewHolder(holder: HabitoViewHolder, position: Int) {
         val habito = listaHabitos[position]
-        holder.tvNombre.text = habito.nombre
-        holder.tvCategoria.text = habito.categoria
+        holder.tvNombre.text = habito.name
+        holder.tvCategoria.text = habito.area?.name ?: "Sin categoría"
     }
 
     override fun getItemCount(): Int = listaHabitos.size

@@ -9,6 +9,8 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,6 +21,7 @@ import com.example.proyectfaseii.data.models.Habito
 import com.example.proyectfaseii.ui.adapters.HabitosAdapter
 import com.example.proyectfaseii.utils.SharedPrefManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -30,20 +33,17 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var rvHabitos: RecyclerView
     private lateinit var adapter: HabitosAdapter
     private lateinit var fabAddHabit: FloatingActionButton
+    private val REQUEST_ALL_PERMISSIONS = 1001
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestPermissions(
-                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
-                    1001
-                )
-            }
+
+        if (!hasRequiredPermissions()) {
+            requestRequiredPermissions()
         }
+
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -62,8 +62,8 @@ class HomeActivity : AppCompatActivity() {
             // Al tocar un hábito, abrir detalle
             val intent = Intent(this, HabitDetailActivity::class.java)
             intent.putExtra("habit_id", habit.id)
-            intent.putExtra("habit_name", habit.nombre)
-            intent.putExtra("habit_category", habit.categoria)
+            intent.putExtra("habit_name", habit.name)
+            intent.putExtra("habit_category", habit.area?.name ?: "")
             startActivity(intent)
         }
         rvHabitos.layoutManager = LinearLayoutManager(this)
@@ -82,6 +82,9 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AddHabitActivity::class.java)
             startActivity(intent)
         }
+        val picker = MaterialDatePicker.Builder.datePicker().build()
+        picker.show(supportFragmentManager, picker.toString())
+
     }
 
     override fun onRequestPermissionsResult(
@@ -90,14 +93,20 @@ class HomeActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1001) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Notificaciones habilitadas", Toast.LENGTH_SHORT).show()
+
+        if (requestCode == REQUEST_ALL_PERMISSIONS) {
+            val denied = permissions.zip(grantResults.toTypedArray())
+                .filter { it.second != PackageManager.PERMISSION_GRANTED }
+                .map { it.first }
+
+            if (denied.isEmpty()) {
+                Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Permiso de notificaciones denegado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permisos denegados: ${denied.joinToString()}", Toast.LENGTH_LONG).show()
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -155,4 +164,34 @@ class HomeActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    private fun hasRequiredPermissions(): Boolean {
+        val permissionsToCheck = mutableListOf<String>()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionsToCheck.add(android.Manifest.permission.POST_NOTIFICATIONS)
+            permissionsToCheck.add(android.Manifest.permission.READ_MEDIA_IMAGES)
+        } else {
+            permissionsToCheck.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        return permissionsToCheck.all {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+
+    private fun requestRequiredPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionsToRequest.add(android.Manifest.permission.POST_NOTIFICATIONS)
+            permissionsToRequest.add(android.Manifest.permission.READ_MEDIA_IMAGES)
+        } else {
+            permissionsToRequest.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), REQUEST_ALL_PERMISSIONS)
+    }
+
+
 }

@@ -59,7 +59,7 @@ class SuggestionsActivity : AppCompatActivity() {
                 // Crear y vincular el hábito sugerido
                 RetrofitClient.apiService.crearHabito(habit)
                 RetrofitClient.apiService.vincularHabito(mapOf("userId" to userId, "habitId" to habit.id))
-                Toast.makeText(this@SuggestionsActivity, "Hábito agregado: ${habit.nombre}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SuggestionsActivity, "Hábito agregado: ${habit.name}", Toast.LENGTH_SHORT).show()
                 loadSuggestions() // recargar en caso de que ya no deba volver a sugerirse
             } catch (e: Exception) {
                 Toast.makeText(this@SuggestionsActivity, "Error al agregar hábito", Toast.LENGTH_SHORT).show()

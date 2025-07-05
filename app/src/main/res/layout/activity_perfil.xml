@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".ui.activities.PerfilActivity">
 
-    <!-- Imagen de perfil -->
     <ImageView
         android:id="@+id/imgPerfil"
         android:layout_width="120dp"
@@ -21,7 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botón para editar imagen -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnEditarFoto"
         android:layout_width="wrap_content"
@@ -36,12 +35,11 @@
         android:layout_marginEnd="4dp"
         android:elevation="6dp"/>
 
-    <!-- Nombre del usuario -->
     <TextView
         android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Nombre del Usuario"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -50,24 +48,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp"/>
 
-    <!-- Correo del usuario -->
     <TextView
         android:id="@+id/txtCorreo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="usuario@correo.com"
         android:textSize="16sp"
         android:textColor="#666666"
         app:layout_constraintTop_toBottomOf="@id/txtNombre"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Descripción breve -->
     <TextView
         android:id="@+id/txtDescripcion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Descripción breve del perfil del usuario"
         android:textAlignment="center"
         android:textColor="#444444"
         android:textSize="14sp"
@@ -76,7 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
 
-    <!-- Tarjeta desplegable -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardTema"
         android:layout_width="0dp"
@@ -86,8 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/txtDescripcion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:visibility="visible">
+        android:layout_marginTop="16dp">
 
         <LinearLayout
             android:id="@+id/layoutExpandible"
@@ -100,7 +94,7 @@
                 android:id="@+id/tituloTarjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Información adicional"
+                android:text="Preferencias de Tema"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
@@ -109,15 +103,63 @@
                 android:id="@+id/contenidoTarjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aquí puedes mostrar información como carrera, semestre, habilidades, hobbies o intereses."
+                android:text="Selecciona el tema visual de la aplicación:"
                 android:textSize="14sp"
                 android:textColor="#444444"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"/>
+                android:layout_marginTop="8dp"/>
+
+            <RadioGroup
+                android:id="@+id/radioTema"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <RadioButton
+                    android:id="@+id/radioClaro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tema Claro" />
+
+                <RadioButton
+                    android:id="@+id/radioOscuro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tema Oscuro" />
+
+                <RadioButton
+                    android:id="@+id/radioPersonalizado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Color Personalizado" />
+            </RadioGroup>
+
+            <!-- Selector de color -->
+            <LinearLayout
+                android:id="@+id/layoutColorPersonalizado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Color:"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerColores"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Botón Cerrar sesión -->
     <Button
         android:id="@+id/btnCerrarSesion"
         android:layout_width="0dp"

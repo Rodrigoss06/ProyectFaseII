@@ -56,4 +56,5 @@
     <string name="habit_name">Habit Name</string>
     <string name="scan_text">Scan Text</string>
     <string name="create_new_habit">Create New Habit</string>
+    <string name="greetinh">¡Hola, usuario!</string>
 </resources>

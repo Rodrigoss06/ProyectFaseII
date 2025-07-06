@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.proyectfaseii.R
 import com.example.proyectfaseii.data.api.RetrofitClient
+import com.example.proyectfaseii.data.firebase.FirestoreManager
 import com.example.proyectfaseii.data.models.*
 import com.example.proyectfaseii.ml.TextScanner
 import com.example.proyectfaseii.utils.SharedPrefManager
@@ -146,32 +148,28 @@ class AddHabitActivity : AppCompatActivity() {
     }
 
     private fun saveHabitToBackend(habit: Habito) {
-        val userId = SharedPrefManager.getInstance(this).getUserId() ?: return
+        val userId = SharedPrefManager.getInstance(this).getUserId()
+        if (userId == null) {
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response1 = RetrofitClient.apiService.crearHabito(habit)
-                if (response1.isSuccessful) {
-                    val linkData = mapOf("userId" to userId, "habitId" to habit.id)
-                    val response2 = RetrofitClient.apiService.vincularHabito(linkData)
-                    runOnUiThread {
-                        if (response2.isSuccessful) {
-                            Toast.makeText(this@AddHabitActivity, "Hábito creado", Toast.LENGTH_SHORT).show()
-                            finish()
-                        } else {
-                            Toast.makeText(this@AddHabitActivity, "Error al vincular hábito", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } else {
-                    runOnUiThread {
-                        Toast.makeText(this@AddHabitActivity, "Error al crear hábito", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: Exception) {
+        FirestoreManager.addHabit(
+            userId = userId,
+            habit = habit,
+            onSuccess = {
                 runOnUiThread {
-                    Toast.makeText(this@AddHabitActivity, "Error de red", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Hábito creado en Firestore", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            },
+            onError = { e ->
+                Log.e("FirestoreManager", "Error al guardar hábito", e)
+                runOnUiThread {
+                    Toast.makeText(this, "Error al guardar hábito: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
-        }
+
+        )
     }
 }

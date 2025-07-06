@@ -14,5 +14,10 @@ data class Habito(
     val remind: List<String> = emptyList(),
     val area: Area? = null,
     val created_date: String = "",
-    val priority: Double = 0.0
+    val priority: Double = 0.0,
+
+    // NEW
+    val current_streak: Int = 0,
+    val longest_streak: Int = 0,
+    val last_completed_date: String = ""
 )

@@ -22,7 +22,14 @@ workRuntimeKtx = "2.10.1"
 firebaseMessaging = "24.1.1"
 firebaseFirestore = "25.1.4"
 mlkittext = "16.0.0"
-
+konfetti = "2.0.2"
+roomCompiler = "2.7.2"
+roomRuntime = "2.7.2"
+roomKtx = "2.7.2"
+places = "4.3.1"
+viewpager2 = "1.0.0"
+annotations = "23.0.0"
+media3CommonKtx = "1.7.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,16 +47,23 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preferenceKtx" }
 firebase_bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
-firebase_auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-firebase_database = { group = "com.google.firebase", name = "firebase-database-ktx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+mlkit-text = { group = "com.google.mlkit", name = "text-recognition", version.ref = "mlkittext" }
+konfetti-xml = { module = "nl.dionsegijn:konfetti-xml", version.ref = "konfetti" }
 androidx-lifecycle-common-jvm = { group = "androidx.lifecycle", name = "lifecycle-common-jvm", version.ref = "lifecycleCommonJvm" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-mlkit-text = { group = "com.google.mlkit", name = "text-recognition", version.ref = "mlkittext" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+org-jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

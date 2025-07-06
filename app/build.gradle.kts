@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.proyectfaseii"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -34,6 +34,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    configurations.all {
+        resolutionStrategy {
+            force(libs.org.jetbrains.annotations)
+            eachDependency {
+                if (requested.group == "com.intellij" && requested.name == "annotations") {
+                    useTarget("org.jetbrains:annotations:23.0.0")
+                    because("Evitar conflicto de anotaciones duplicadas")
+                }
+            }
+        }
+    }
+
 }
 
 dependencies {
@@ -56,6 +68,10 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore)
     implementation(libs.mlkit.text)
+    implementation(libs.konfetti.xml)
+    implementation(libs.androidx.room.compiler)
+    implementation(libs.places)
+    implementation(libs.androidx.media3.common.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

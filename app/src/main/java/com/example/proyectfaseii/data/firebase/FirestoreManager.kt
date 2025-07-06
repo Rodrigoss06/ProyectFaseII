@@ -1,5 +1,6 @@
 package com.example.proyectfaseii.data.firebase
 
+import android.widget.Toast
 import com.example.proyectfaseii.data.models.Habito
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,6 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 object FirestoreManager {
     private val db = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+
 
     fun obtenerHabitos(onSuccess: (List<Habito>) -> Unit, onFailure: (Exception) -> Unit) {
         if (userId == null) return
@@ -22,13 +25,14 @@ object FirestoreManager {
             }
     }
 
-    fun agregarHabito(habito: Habito, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        if (userId == null) return
-
-        db.collection("usuarios").document(userId).collection("habitos")
-            .add(habito)
+    fun addHabit(userId: String, habit: Habito, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
+        db.collection("users")
+            .document(userId)
+            .collection("habits")
+            .document(habit.id)
+            .set(habit)
             .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { e -> onFailure(e) }
+            .addOnFailureListener { e -> onError(e) }
     }
 
     // Otros métodos: eliminarHabito(), actualizarHabito(), etc.

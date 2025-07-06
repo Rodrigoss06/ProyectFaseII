@@ -40,15 +40,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val title = remoteMessage.notification?.title ?: "HábitoRed"
-        val body  = remoteMessage.notification?.body  ?: ""
+        val title = remoteMessage.data["habit_name"]?.let {
+            "¡Sigue con $it!"
+        } ?: remoteMessage.notification?.title ?: "HábitoRed"
+
+        val streak = remoteMessage.data["streak"]?.toIntOrNull()
+        val body = if (streak != null) {
+            "Ya llevas $streak días seguidos. ¡No pares ahora! 💪"
+        } else {
+            remoteMessage.notification?.body ?: "Tu hábito te espera."
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
                 != android.content.pm.PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
+            ) return
         }
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -60,6 +66,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         NotificationManagerCompat.from(this)
             .notify(NOTIF_ID, builder.build())
     }
+
 
     override fun onNewToken(token: String) {
         Log.d("FCM", "Nuevo token: $token")

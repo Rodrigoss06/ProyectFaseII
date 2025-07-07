@@ -10,6 +10,7 @@ class SharedPrefManager private constructor(context: Context) {
         private const val KEY_USER_ID = "key_user_id"
         private const val KEY_USER_NAME = "key_user_name"
         private const val KEY_USER_EMAIL = "key_user_email"
+        private const val KEY_USER_DESCRIPTION = "key_user_description"
         private const val KEY_NOTIFICATIONS = "key_notifications"
 
         @Volatile
@@ -25,11 +26,12 @@ class SharedPrefManager private constructor(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-    fun saveUser(id: String, nombre: String, email: String) {
+    fun saveUser(id: String, nombre: String, email: String, descripcion: String = "") {
         prefs.edit().apply {
             putString(KEY_USER_ID, id)
             putString(KEY_USER_NAME, nombre)
             putString(KEY_USER_EMAIL, email)
+            putString(KEY_USER_DESCRIPTION, descripcion)
             apply()
         }
     }
@@ -37,6 +39,7 @@ class SharedPrefManager private constructor(context: Context) {
     fun getUserId(): String? = prefs.getString(KEY_USER_ID, null)
     fun getUserName(): String? = prefs.getString(KEY_USER_NAME, null)
     fun getUserEmail(): String? = prefs.getString(KEY_USER_EMAIL, null)
+    fun getUserDescription(): String? = prefs.getString(KEY_USER_DESCRIPTION, null)
 
     fun setNotificationsEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_NOTIFICATIONS, enabled).apply()

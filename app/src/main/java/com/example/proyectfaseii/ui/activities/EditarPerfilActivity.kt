@@ -23,15 +23,17 @@ class EditarPerfilActivity : AppCompatActivity() {
         btnGuardar = findViewById(R.id.btnGuardar)
         btnCancelar = findViewById(R.id.btnCancelar)
 
-        // Cargar datos recibidos
-        edtNombre.setText(intent.getStringExtra("nombre"))
-        edtDescripcion.setText(intent.getStringExtra("descripcion"))
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val descripcion = intent.getStringExtra("descripcion") ?: ""
+
+        edtNombre.setText(nombre)
+        edtDescripcion.setText(descripcion)
 
         btnGuardar.setOnClickListener {
-            val intentResult = intent
-            intentResult.putExtra("nombreActualizado", edtNombre.text.toString())
-            intentResult.putExtra("descripcionActualizada", edtDescripcion.text.toString())
-            setResult(Activity.RESULT_OK, intentResult)
+            val intent = intent
+            intent.putExtra("nombreActualizado", edtNombre.text.toString())
+            intent.putExtra("descripcionActualizada", edtDescripcion.text.toString())
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 

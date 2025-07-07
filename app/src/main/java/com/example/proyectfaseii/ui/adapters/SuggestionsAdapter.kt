@@ -34,8 +34,8 @@ class SuggestionsAdapter(
 
     override fun onBindViewHolder(holder: SuggestionViewHolder, position: Int) {
         val habit = listaSuggestions[position]
-        holder.tvName.text = habit.nombre
-        holder.tvCategory.text = habit.categoria
+        holder.tvName.text = habit.name
+        holder.tvCategory.text = habit.area?.name ?: "Sin categoría"
     }
 
     override fun getItemCount(): Int = listaSuggestions.size

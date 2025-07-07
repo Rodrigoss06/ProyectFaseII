@@ -3,6 +3,7 @@ package com.example.proyectfaseii.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectfaseii.R
@@ -16,6 +17,7 @@ class HabitosAdapter(
     inner class HabitoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
         val tvCategoria: TextView = itemView.findViewById(R.id.tvCategoria)
+        val progressGoal: ProgressBar = itemView.findViewById(R.id.progressGoal)
 
         init {
             itemView.setOnClickListener {
@@ -32,8 +34,15 @@ class HabitosAdapter(
 
     override fun onBindViewHolder(holder: HabitoViewHolder, position: Int) {
         val habito = listaHabitos[position]
-        holder.tvNombre.text = habito.nombre
-        holder.tvCategoria.text = habito.categoria
+        holder.tvNombre.text = habito.name
+        holder.tvCategoria.text = habito.area?.name ?: "Sin categoría"
+
+        // 👇 Calculate progress based on goal.value and goal_history_items size
+        val goalValue = habito.goal.value
+        val completed = habito.goal_history_items.size.toDouble()
+
+        val progress = if (goalValue > 0) ((completed / goalValue) * 100).toInt() else 0
+        holder.progressGoal.progress = progress
     }
 
     override fun getItemCount(): Int = listaHabitos.size

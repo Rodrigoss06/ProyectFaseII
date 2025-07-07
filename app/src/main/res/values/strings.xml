@@ -31,10 +31,12 @@
     <string name="menu_suggestions">Sugerencias</string>
 
     <!-- Add Habit -->
-    <string name="add_habit_title">Nuevo Hábito</string>
-    <string name="habit_name_hint">Nombre del hábito</string>
-    <string name="habit_category_hint">Categoría</string>
-    <string name="save_habit_button">Guardar Hábito</string>
+    <string name="add_habit_title">Add New Habit</string>
+    <string name="habit_name_hint">Habit Name</string>
+    <string name="habit_category_hint">Habit Category</string>
+    <string name="scan_text_button">Scan Text</string>
+    <string name="save_habit_button">Save Habit</string>
+
 
     <!-- Habit Detail -->
     <string name="habit_detail_title">Detalle del Hábito</string>
@@ -45,4 +47,14 @@
     <!-- Suggestions -->
     <string name="suggestions_title">Sugerencias de Hábitos</string>
     <string name="add_habit_button">Add</string>
+    <string name="goal_periodicity_e_g_daily">Goal Periodicity (e.g. daily)</string>
+    <string name="save_habit">Save Habit</string>
+    <string name="unit_type_e_g_minutes">Unit Type (e.g. minutes)</string>
+    <string name="goal_value">Goal Value</string>
+    <string name="area_optional">Area (optional)</string>
+    <string name="recurrence_e_g_daily">Recurrence (e.g. daily)</string>
+    <string name="habit_name">Habit Name</string>
+    <string name="scan_text">Scan Text</string>
+    <string name="create_new_habit">Create New Habit</string>
+    <string name="greetinh">¡Hola, usuario!</string>
 </resources>
